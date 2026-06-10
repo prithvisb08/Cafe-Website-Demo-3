@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cafe LPK – Rooftop Bar & Kitchen, Bhopal</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body { font-family: 'Georgia', serif; background: #1a1008; color: #f5efe6; line-height: 1.7; }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; width: 100%; }
+
+    :root {
+      --brown: #4a2c10; --gold: #c9973a; --gold-lt: #e8b96a;
+      --cream: #fdf6ec; --charcoal: #1a1008; --white: #fff8f0;
+      --text-lt: #f5efe6; --card-bg: #2b1a0a;
+    }
+
+    /* NAVBAR */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 5%;
+      background: rgba(26,16,8,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201,151,58,0.25);
+      transition: box-shadow .3s;
+    }
+    .nav-logo { font-size: 1.35rem; font-weight: bold; letter-spacing: 2px; color: var(--gold); text-transform: uppercase; }
+    .nav-logo span { color: var(--white); }
+    .nav-links { display: flex; gap: 30px; list-style: none; }
+    .nav-links a { font-size: 0.82rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-lt); transition: color .3s; }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .nav-toggle span { width: 25px; height: 2px; background: var(--gold); display: block; border-radius: 2px; }
+
+    /* HERO */
+    #hero {
+      position: relative; height: 100vh; min-height: 600px;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center; overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1800&q=80') center/cover no-repeat;
+      filter: brightness(0.38); z-index: 0;
+    }
+    .hero-bg::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(26,16,8,0.4) 0%, rgba(74,44,16,0.25) 50%, rgba(26,16,8,0.85) 100%);
+    }
+    .hero-content { position: relative; z-index: 1; padding: 0 20px; max-width: 860px; }
+    .hero-label {
+      display: inline-block; margin-bottom: 18px;
+      font-size: 0.75rem; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--gold); border: 1px solid var(--gold); padding: 5px 18px; border-radius: 30px;
+    }
+    .hero-title {
+      font-size: clamp(2.8rem, 7vw, 5.5rem); font-weight: 700; line-height: 1.1;
+      letter-spacing: 2px; color: var(--white); text-shadow: 0 4px 24px rgba(0,0,0,0.6);
+    }
+    .hero-title .accent { color: var(--gold); display: block; font-size: 0.55em; letter-spacing: 5px; margin-top: 8px; }
+    .hero-tagline { margin: 18px 0 36px; font-size: clamp(1rem, 2.2vw, 1.22rem); color: #e8d5b8; letter-spacing: 0.5px; font-style: italic; }
+    .btn-primary {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--gold), var(--gold-lt));
+      color: var(--charcoal); font-weight: 700; padding: 15px 44px; border-radius: 50px;
+      font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase;
+      box-shadow: 0 8px 30px rgba(201,151,58,0.45); transition: transform .3s, box-shadow .3s; border: none; cursor: pointer;
+    }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(201,151,58,0.6); }
+    .hero-scroll { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 1; animation: bounce 2s infinite; }
+    .hero-scroll span { display: block; width: 22px; height: 22px; border-right: 2px solid var(--gold); border-bottom: 2px solid var(--gold); transform: rotate(45deg); margin: auto; }
+    @keyframes bounce { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(10px); } }
+
+    /* SECTIONS */
+    section { padding: 90px 5%; }
+    .section-badge { display: inline-block; font-size: 0.7rem; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); border-bottom: 1px solid var(--gold); padding-bottom: 4px; margin-bottom: 12px; }
+    .section-title { font-size: clamp(1.8rem, 4vw, 2.8rem); color: var(--white); line-height: 1.2; margin-bottom: 14px; }
+    .section-sub { font-size: 1rem; color: #c4a882; max-width: 560px; margin-bottom: 50px; font-style: italic; }
+    .section-header { text-align: center; }
+    .section-header .section-sub { margin-left: auto; margin-right: auto; }
+    .gold-line { width: 60px; height: 2px; background: linear-gradient(90deg, var(--gold), transparent); margin: 12px auto 0; }
+
+    /* ABOUT */
+    #about { background: linear-gradient(135deg, #2b1a0a 0%, #1a1008 100%); border-top: 1px solid rgba(201,151,58,0.2); border-bottom: 1px solid rgba(201,151,58,0.2); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; max-width: 1100px; margin: 0 auto; }
+    .about-text p { color: #c4a882; margin-bottom: 16px; line-height: 1.85; }
+    .tag-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+    .tag { font-size: 0.72rem; letter-spacing: 1.5px; text-transform: uppercase; border: 1px solid var(--gold); color: var(--gold); padding: 6px 16px; border-radius: 30px; transition: background .3s, color .3s; }
+    .tag:hover { background: var(--gold); color: var(--charcoal); }
+    .highlights-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .hl-card { background: rgba(201,151,58,0.06); border: 1px solid rgba(201,151,58,0.18); border-radius: 14px; padding: 22px 20px; text-align: center; transition: border-color .3s, background .3s; }
+    .hl-card:hover { background: rgba(201,151,58,0.12); border-color: var(--gold); }
+    .hl-icon { font-size: 2rem; margin-bottom: 8px; }
+    .hl-card h4 { font-size: 0.82rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--gold); margin-bottom: 4px; }
+    .hl-card p { font-size: 0.8rem; color: #a8896a; }
+
+    /* MENU */
+    #menu { background: var(--charcoal); }
+    .menu-tabs { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 50px; }
+    .tab-btn { font-size: 0.75rem; letter-spacing: 1.5px; text-transform: uppercase; padding: 9px 24px; border-radius: 30px; border: 1px solid rgba(201,151,58,0.4); background: transparent; color: var(--gold); cursor: pointer; transition: all .3s; }
+    .tab-btn.active, .tab-btn:hover { background: var(--gold); color: var(--charcoal); border-color: var(--gold); }
+    .menu-category { display: none; }
+    .menu-category.active { display: block; }
+    .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 28px; }
+    .menu-card { background: var(--card-bg); border: 1px solid rgba(201,151,58,0.15); border-radius: 16px; overflow: hidden; transition: transform .3s, box-shadow .3s, border-color .3s; }
+    .menu-card:hover { transform: translateY(-6px); box-shadow: 0 18px 50px rgba(0,0,0,0.5); border-color: rgba(201,151,58,0.4); }
+    .menu-img-wrap { height: 200px; overflow: hidden; position: relative; }
+    .menu-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s; }
+    .menu-card:hover .menu-img-wrap img { transform: scale(1.07); }
+    .veg-badge { position: absolute; top: 12px; right: 12px; width: 20px; height: 20px; border: 2px solid #2e7d32; background: #fff; border-radius: 3px; display: flex; align-items: center; justify-content: center; }
+    .veg-badge::after { content: ''; width: 8px; height: 8px; background: #2e7d32; border-radius: 50%; }
+    .nonveg-badge { position: absolute; top: 12px; right: 12px; width: 20px; height: 20px; border: 2px solid #c62828; background: #fff; border-radius: 3px; display: flex; align-items: center; justify-content: center; }
+    .nonveg-badge::after { content: ''; width: 8px; height: 8px; background: #c62828; border-radius: 50%; }
+    .menu-info { padding: 18px 20px 22px; }
+    .menu-info h3 { font-size: 1rem; color: var(--white); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.8px; }
+    .menu-info p { font-size: 0.82rem; color: #8a7060; margin-bottom: 14px; line-height: 1.5; font-style: italic; }
+    .menu-price { font-size: 1.05rem; color: var(--gold); font-weight: 700; }
+    .menu-full { margin-top: 20px; }
+    .menu-full-section { margin-bottom: 50px; }
+    .menu-full-section h3 { font-size: 0.85rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); border-left: 3px solid var(--gold); padding-left: 14px; margin-bottom: 18px; }
+    .menu-table { width: 100%; border-collapse: collapse; }
+    .menu-table tr { border-bottom: 1px solid rgba(201,151,58,0.1); transition: background .2s; }
+    .menu-table tr:hover { background: rgba(201,151,58,0.05); }
+    .menu-table td { padding: 11px 8px; font-size: 0.88rem; color: #c4a882; }
+    .menu-table td:first-child { color: var(--white); }
+    .menu-table td:last-child { text-align: right; color: var(--gold); font-weight: 600; white-space: nowrap; }
+    .menu-table td.item-desc { font-size: 0.77rem; color: #7a6550; font-style: italic; }
+
+    /* GALLERY */
+    #vibe { background: linear-gradient(160deg, #1a1008 0%, #2b1a0a 100%); }
+    .gallery-mosaic { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: 300px 300px; gap: 14px; max-width: 1100px; margin: 0 auto; }
+    .gallery-item { border-radius: 16px; overflow: hidden; position: relative; }
+    .gallery-item:first-child { grid-column: span 2; }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s, filter .5s; filter: brightness(0.82); }
+    .gallery-item:hover img { transform: scale(1.05); filter: brightness(1.05); }
+    .gallery-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(26,16,8,0.6) 0%, transparent 50%); pointer-events: none; }
+
+    /* EXPERIENCE */
+    #experience { background: var(--charcoal); padding: 70px 5%; }
+    .exp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 28px; max-width: 1100px; margin: 50px auto 0; }
+    .exp-card { text-align: center; padding: 30px 20px; background: var(--card-bg); border: 1px solid rgba(201,151,58,0.15); border-radius: 14px; transition: border-color .3s, transform .3s; }
+    .exp-card:hover { border-color: var(--gold); transform: translateY(-5px); }
+    .exp-icon { font-size: 2.4rem; margin-bottom: 14px; }
+    .exp-card h4 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--gold); margin-bottom: 8px; }
+    .exp-card p { font-size: 0.8rem; color: #8a7060; }
+
+    /* INFO */
+    #info { background: linear-gradient(135deg, #2b1a0a 0%, #1a1008 100%); }
+    .info-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 30px; max-width: 1100px; margin: 0 auto 60px; }
+    .info-card { background: rgba(201,151,58,0.05); border: 1px solid rgba(201,151,58,0.15); border-radius: 16px; padding: 28px 24px; }
+    .info-card h4 { font-size: 0.75rem; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; border-bottom: 1px solid rgba(201,151,58,0.2); padding-bottom: 10px; }
+    .info-list { list-style: none; }
+    .info-list li { font-size: 0.84rem; color: #c4a882; padding: 4px 0; display: flex; align-items: flex-start; gap: 8px; }
+    .info-list li::before { content: "✦"; color: var(--gold); flex-shrink: 0; font-size: 0.6rem; margin-top: 5px; }
+
+    /* CONTACT */
+    #contact { background: var(--charcoal); }
+    .contact-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; max-width: 1100px; margin: 0 auto; align-items: start; }
+    .contact-detail { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 26px; }
+    .c-icon { width: 44px; height: 44px; flex-shrink: 0; border: 1px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: var(--gold); }
+    .contact-detail h4 { font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
+    .contact-detail p { font-size: 0.88rem; color: #c4a882; }
+    .contact-detail a { color: var(--gold-lt); transition: color .3s; }
+    .contact-detail a:hover { color: var(--white); }
+    .map-embed { border-radius: 18px; overflow: hidden; border: 1px solid rgba(201,151,58,0.25); height: 360px; }
+    .map-embed iframe { width: 100%; height: 100%; border: 0; filter: grayscale(30%) invert(5%); }
+
+    /* INSTAGRAM */
+    .insta-wrap { text-align: center; margin: 60px 0 20px; }
+    .btn-insta {
+      display: inline-flex; align-items: center; gap: 14px;
+      background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+      color: #fff; font-weight: 700; font-size: 1.05rem;
+      padding: 18px 52px; border-radius: 50px;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      box-shadow: 0 8px 35px rgba(220,39,67,0.45); transition: transform .3s, box-shadow .3s;
+    }
+    .btn-insta:hover { transform: translateY(-4px); box-shadow: 0 16px 50px rgba(220,39,67,0.6); }
+    .btn-insta svg { width: 24px; height: 24px; fill: #fff; flex-shrink: 0; }
+
+    /* FOOTER */
+    footer { background: #110a04; border-top: 1px solid rgba(201,151,58,0.2); padding: 40px 5% 30px; text-align: center; }
+    .footer-logo { font-size: 1.4rem; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; margin-bottom: 8px; }
+    .footer-tagline { font-size: 0.8rem; color: #6a5040; margin-bottom: 20px; font-style: italic; }
+    .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 24px; margin-bottom: 20px; }
+    .footer-links a { font-size: 0.73rem; letter-spacing: 2px; text-transform: uppercase; color: #6a5040; transition: color .3s; }
+    .footer-links a:hover { color: var(--gold); }
+    .footer-copy { font-size: 0.72rem; color: #3a2818; margin-top: 8px; }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .nav-links { display: none; flex-direction: column; gap: 20px; position: absolute; top: 62px; left: 0; right: 0; background: rgba(26,16,8,0.98); padding: 28px 5%; border-bottom: 1px solid rgba(201,151,58,0.2); }
+      .nav-links.open { display: flex; }
+      .nav-toggle { display: flex; }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .gallery-mosaic { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .gallery-item { height: 200px; }
+      .gallery-item:first-child { grid-column: span 2; height: 240px; }
+      .contact-wrap { grid-template-columns: 1fr; }
+      .menu-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .highlights-grid { grid-template-columns: 1fr; }
+      .gallery-mosaic { grid-template-columns: 1fr; }
+      .gallery-item:first-child { grid-column: span 1; }
+      .exp-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <div class="nav-logo">Cafe <span>LPK</span></div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#about">About</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#vibe">Gallery</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-toggle" id="navToggle" onclick="toggleNav()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-label">✦ Bhopal's Finest Rooftop Experience ✦</div>
+    <h1 class="hero-title">
+      Cafe LPK
+      <span class="accent">Rooftop Bar &amp; Kitchen</span>
+    </h1>
+    <p class="hero-tagline">Love · Passion · Karma — Where every sip tells a story &amp; every bite creates a memory</p>
+    <a href="#menu" class="btn-primary">✦ Explore Our Menu</a>
+  </div>
+  <div class="hero-scroll"><span></span></div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-text">
+      <div class="section-badge">Our Story</div>
+      <h2 class="section-title">Love. Passion.<br>Karma.</h2>
+      <p>Nestled in Arera Colony, Bhopal, Cafe LPK is more than a restaurant — it's a feeling. Perched high above the city skyline, our rooftop venue blends a curated menu, craft cocktails, live performances, and an ambience that turns every evening into an unforgettable story.</p>
+      <p>From hand-batter pizzas to tandoori delights, cold craft beers to signature cocktails — we have everything you crave. Whether you're here for a casual lunch, a romantic dinner, or a late-night hangout, LPK welcomes you with open arms and warm vibes.</p>
+      <div class="tag-cloud">
+        <span class="tag">Rooftop</span><span class="tag">Live Music</span>
+        <span class="tag">Craft Cocktails</span><span class="tag">Beer Selection</span>
+        <span class="tag">Tandoor</span><span class="tag">All-You-Can-Eat</span>
+        <span class="tag">Romantic</span><span class="tag">Trendy</span>
+      </div>
+    </div>
+    <div class="highlights-grid">
+      <div class="hl-card"><div class="hl-icon">🍺</div><h4>Great Beer</h4><p>Curated draught &amp; bottled selection</p></div>
+      <div class="hl-card"><div class="hl-icon">🎵</div><h4>Live Music</h4><p>Performances &amp; live entertainment</p></div>
+      <div class="hl-card"><div class="hl-icon">🌆</div><h4>Rooftop Views</h4><p>Bhopal's best skyline dining</p></div>
+      <div class="hl-card"><div class="hl-icon">🍰</div><h4>Great Desserts</h4><p>Brownies, cheesecakes &amp; more</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu">
+  <div class="section-header">
+    <div class="section-badge">What We Serve</div>
+    <h2 class="section-title">Our Menu</h2>
+    <div class="gold-line"></div>
+    <p class="section-sub">Crafted with love, served with passion. From starters to spirits — something for everyone.</p>
+  </div>
+
+  <div class="menu-tabs">
+    <button class="tab-btn active" onclick="showTab('featured',this)">⭐ Featured</button>
+    <button class="tab-btn" onclick="showTab('starters',this)">🍽️ Starters</button>
+    <button class="tab-btn" onclick="showTab('pizza',this)">🍕 Pizza</button>
+    <button class="tab-btn" onclick="showTab('mains',this)">🍛 Mains</button>
+    <button class="tab-btn" onclick="showTab('desserts',this)">🍰 Desserts</button>
+    <button class="tab-btn" onclick="showTab('drinks',this)">🍹 Drinks</button>
+  </div>
+
+  <!-- FEATURED -->
+  <div id="featured" class="menu-category active">
+    <div class="menu-grid">
+      <div class="menu-card">
+        <div class="menu-img-wrap">
+          <img src="https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=600&q=80" alt="Chicken Tikka"/>
+          <div class="nonveg-badge"></div>
+        </div>
+        <div class="menu-info"><h3>Chicken Tikka</h3><p>Succulent chicken marinated in classic Indian spices, charred to perfection in a clay oven</p><span class="menu-price">₹350</span></div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-img-wrap">
+          <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600&q=80" alt="Chicken Overload Pizza"/>
+          <div class="nonveg-badge"></div>
+        </div>
+        <div class="menu-info"><h3>Chicken Overload Pizza</h3><p>Hand-battered dough loaded with multiple chicken toppings — the ultimate indulgence</p><span class="menu-price">₹480</span></div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-img-wrap">
+          <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=600&q=80" alt="Signature Cocktails"/>
+        </div>
+        <div class="menu-info"><h3>Signature Cocktails</h3><p>Handcrafted cocktails by our expert bartenders — from timeless classics to LPK originals</p><span class="menu-price">Starting ₹280</span></div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-img-wrap">
+          <img src="https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=600&q=80" alt="Lemon Chilli Paneer"/>
+          <div class="veg-badge"></div>
+        </div>
+        <div class="menu-info"><h3>Lemon Chilli Paneer</h3><p>Crispy golden paneer tossed in a tangy lemon-chilli glaze — a crowd favourite</p><span class="menu-price">₹250 / ₹300</span></div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-img-wrap">
+          <img src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=600&q=80" alt="Sizzling Brownie"/>
+          <div class="veg-badge"></div>
+        </div>
+        <div class="menu-info"><h3>Sizzling Brownie</h3><p>Gooey warm brownie on a hot sizzler plate, drenched in rich chocolate sauce</p><span class="menu-price">₹345</span></div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-img-wrap">
+          <img src="https://images.unsplash.com/photo-1610057099431-d73a1c9d2f2f?w=600&q=80" alt="Tandoori Chicken"/>
+          <div class="nonveg-badge"></div>
+        </div>
+        <div class="menu-info"><h3>Tandoori Chicken</h3><p>Classic clay-oven roasted chicken with smoky char — Half or Full, your choice</p><span class="menu-price">₹350 / ₹550</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STARTERS -->
+  <div id="starters" class="menu-category">
+    <div class="menu-full">
+      <div class="menu-full-section">
+        <h3>🥗 Salads</h3>
+        <table class="menu-table">
+          <tr><td>Aloo Chat</td><td class="item-desc">Classic Indian street-style potato chaat</td><td>₹150</td></tr>
+          <tr><td>Caesar Salad</td><td class="item-desc">Veg / Chicken</td><td>₹210 / ₹250</td></tr>
+          <tr><td>Greek Salad</td><td class="item-desc">Cucumber, tomato, olives, feta, lemon vinaigrette</td><td>₹230</td></tr>
+          <tr><td>Dice Watermelon &amp; Feta</td><td class="item-desc">Refreshing seasonal salad</td><td>₹210</td></tr>
+        </table>
+      </div>
+      <div class="menu-full-section">
+        <h3>🍜 Soups</h3>
+        <table class="menu-table">
+          <tr><td>Creamy Mushroom</td><td></td><td>₹150</td></tr>
+          <tr><td>Sweet Corn Soup</td><td class="item-desc">Veg / Chicken</td><td>₹150 / ₹190</td></tr>
+          <tr><td>Hot and Sour Soup</td><td class="item-desc">Veg / Chicken</td><td>₹150 / ₹190</td></tr>
+          <tr><td>Manchow Soup</td><td class="item-desc">Veg / Chicken</td><td>₹150 / ₹190</td></tr>
+        </table>
+      </div>
+      <div class="menu-full-section">
+        <h3>🌿 Sharing Plates — Veg</h3>
+        <table class="menu-table">
+          <tr><td>Cottage Cheese Stick</td><td></td><td>₹250</td></tr>
+          <tr><td>Mongolian Potato</td><td></td><td>₹210</td></tr>
+          <tr><td>Creamy Spicy Mushroom</td><td class="item-desc">Infused with herb &amp; butter</td><td>₹280</td></tr>
+          <tr><td>Lemon Chilli Paneer</td><td></td><td>₹250 / ₹300</td></tr>
+          <tr><td>Crispy / Honey Chilli Potato</td><td></td><td>₹210</td></tr>
+          <tr><td>Dragon Veg Manchurian</td><td></td><td>₹250</td></tr>
+          <tr><td>Veg Spring Roll</td><td></td><td>₹180</td></tr>
+          <tr><td>Veg Wings</td><td></td><td>₹150</td></tr>
+          <tr><td>Cheesy Garlic Bread</td><td></td><td>₹140</td></tr>
+          <tr><td>Bruschetta</td><td></td><td>₹170</td></tr>
+        </table>
+      </div>
+      <div class="menu-full-section">
+        <h3>🍗 Sharing Plates — Non-Veg</h3>
+        <table class="menu-table">
+          <tr><td>Chicken 65</td><td></td><td>₹350</td></tr>
+          <tr><td>Fish and Chips</td><td></td><td>₹380</td></tr>
+          <tr><td>Chicken Lollipop (6 pcs)</td><td></td><td>₹320</td></tr>
+          <tr><td>Chilli Chicken</td><td></td><td>₹350</td></tr>
+          <tr><td>American Chilli Chicken</td><td></td><td>₹350</td></tr>
+          <tr><td>Chicken Tikka</td><td></td><td>₹350</td></tr>
+          <tr><td>Murgh Malai Tikka</td><td></td><td>₹380</td></tr>
+          <tr><td>Tandoori Chicken</td><td class="item-desc">Half / Full</td><td>₹350 / ₹550</td></tr>
+          <tr><td>Chilli Prawns</td><td></td><td>₹380</td></tr>
+          <tr><td>Prawns Butter Garlic</td><td></td><td>₹380</td></tr>
+          <tr><td>Grilled Prawns</td><td></td><td>₹380</td></tr>
+          <tr><td>Chicken Wings (6 pcs)</td><td></td><td>₹210</td></tr>
+          <tr><td>Panko Fish Fingers</td><td></td><td>₹240</td></tr>
+          <tr><td>Chicken Nuggets</td><td></td><td>₹220</td></tr>
+          <tr><td>Chicken Popcorn</td><td></td><td>₹220</td></tr>
+          <tr><td>Chicken Platter</td><td class="item-desc">Fish Fingers + Nuggets + Popcorn</td><td>₹450</td></tr>
+        </table>
+      </div>
+      <div class="menu-full-section">
+        <h3>🌮 Tacos &amp; Quesadilla</h3>
+        <table class="menu-table">
+          <tr><td>Classic Veg Tacos</td><td></td><td>₹250</td></tr>
+          <tr><td>Mexican Chicken Tacos</td><td></td><td>₹280</td></tr>
+          <tr><td>Veg Quesadilla</td><td></td><td>₹250</td></tr>
+          <tr><td>Chicken Quesadilla</td><td></td><td>₹290</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- PIZZA -->
+  <div id="pizza" class="menu-category">
+    <div class="menu-grid" style="margin-bottom:30px;">
+      <div class="menu-card">
+        <div class="menu-img-wrap"><img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=600&q=80" alt="Margherita Pizza"/><div class="veg-badge"></div></div>
+        <div class="menu-info"><h3>Margherita</h3><p>Classic tomato sauce, mozzarella cheese, fresh basil on hand-battered dough</p><span class="menu-price">₹350</span></div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-img-wrap"><img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600&q=80" alt="Chicken Overload Pizza"/><div class="nonveg-badge"></div></div>
+        <div class="menu-info"><h3>Chicken Overload</h3><p>Loaded with chicken, mozzarella and bold toppings — the LPK signature pizza</p><span class="menu-price">₹480</span></div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-img-wrap"><img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600&q=80" alt="Chicken BBQ Pizza"/><div class="nonveg-badge"></div></div>
+        <div class="menu-info"><h3>Chicken BBQ</h3><p>Smoky BBQ chicken with caramelised onions and stretchy mozzarella</p><span class="menu-price">₹480</span></div>
+      </div>
+    </div>
+    <div class="menu-full">
+      <div class="menu-full-section">
+        <h3>🍕 Full Pizza Menu (Hand Batter — Fresh Dough)</h3>
+        <table class="menu-table">
+          <tr><td>Margherita</td><td class="item-desc">Veg</td><td>₹350</td></tr>
+          <tr><td>Mushroom</td><td class="item-desc">Veg</td><td>₹350</td></tr>
+          <tr><td>Spicy Paneer</td><td class="item-desc">Veg</td><td>₹380</td></tr>
+          <tr><td>Mexi-Italian</td><td class="item-desc">Veg / Chicken</td><td>₹380 / ₹450</td></tr>
+          <tr><td>Hawaiian</td><td class="item-desc">Veg / Chicken</td><td>₹380 / ₹450</td></tr>
+          <tr><td>Chicken Sausage</td><td></td><td>₹450</td></tr>
+          <tr><td>Chicken Overload</td><td></td><td>₹480</td></tr>
+          <tr><td>Chicken BBQ</td><td></td><td>₹480</td></tr>
+          <tr><td>Grilled Chicken</td><td></td><td>₹480</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAINS -->
+  <div id="mains" class="menu-category">
+    <div class="menu-full">
+      <div class="menu-full-section">
+        <h3>🍛 Indian Mains — Veg</h3>
+        <table class="menu-table">
+          <tr><td>Paneer Butter Masala</td><td class="item-desc">Cottage cheese in creamy tomato gravy</td><td>₹120</td></tr>
+          <tr><td>Kadai Paneer</td><td class="item-desc">With bell pepper &amp; Indian spices</td><td>₹120</td></tr>
+          <tr><td>Shahi Paneer</td><td class="item-desc">Rich cashew nut gravy</td><td>₹120</td></tr>
+          <tr><td>Paneer Tikka Masala</td><td class="item-desc">Grilled paneer in spicy tomato gravy</td><td>₹150</td></tr>
+          <tr><td>Mix Veg</td><td class="item-desc">Seasonal vegetables with Indian spices</td><td>₹95</td></tr>
+          <tr><td>Aloo Gobi</td><td class="item-desc">Potato and cauliflower with Indian spices</td><td>₹75</td></tr>
+          <tr><td>Dal Fry / Tadka</td><td class="item-desc">Yellow lentils, cumin, red chillies</td><td>₹70</td></tr>
+          <tr><td>Mushroom Masala</td><td class="item-desc">Onion-tomato gravy</td><td>₹120</td></tr>
+        </table>
+      </div>
+      <div class="menu-full-section">
+        <h3>🍖 Indian Mains — Non-Veg</h3>
+        <table class="menu-table">
+          <tr><td>Butter Chicken</td><td class="item-desc">Roasted chicken in creamy tomato gravy</td><td>₹150</td></tr>
+          <tr><td>Kadai Chicken</td><td class="item-desc">With bell pepper &amp; Indian spices</td><td>₹135</td></tr>
+          <tr><td>Murgh Tikka Masala</td><td class="item-desc">Grilled chicken in spicy tomato gravy</td><td>₹170</td></tr>
+          <tr><td>Mutton Korma</td><td class="item-desc">Spicy onion &amp; yoghurt gravy</td><td>₹185</td></tr>
+          <tr><td>Mutton Handi</td><td class="item-desc">Slow-cooked in earthen pot</td><td>₹185</td></tr>
+          <tr><td>Fish Amritsari Curry</td><td class="item-desc">Fried fish in spicy tomato gravy</td><td>₹150</td></tr>
+        </table>
+      </div>
+      <div class="menu-full-section">
+        <h3>🍚 Rice &amp; Breads</h3>
+        <table class="menu-table">
+          <tr><td>Veg Fried Rice</td><td></td><td>₹85</td></tr>
+          <tr><td>Chicken Fried Rice</td><td></td><td>₹100</td></tr>
+          <tr><td>Egg Fried Rice</td><td></td><td>₹90</td></tr>
+          <tr><td>Mixed Fried Rice</td><td></td><td>₹115</td></tr>
+          <tr><td>Veg Pulao</td><td></td><td>₹90</td></tr>
+          <tr><td>Butter Naan</td><td></td><td>₹30</td></tr>
+          <tr><td>Garlic Naan</td><td></td><td>₹45</td></tr>
+          <tr><td>Lachha Paratha</td><td></td><td>₹30</td></tr>
+          <tr><td>Tandoori Roti</td><td></td><td>₹10</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- DESSERTS -->
+  <div id="desserts" class="menu-category">
+    <div class="menu-grid">
+      <div class="menu-card">
+        <div class="menu-img-wrap"><img src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=600&q=80" alt="Brownie with Ice Cream"/><div class="veg-badge"></div></div>
+        <div class="menu-info"><h3>Brownie with Ice Cream</h3><p>Warm chocolate brownie with a generous scoop of vanilla ice cream</p><span class="menu-price">₹295</span></div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-img-wrap"><img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?w=600&q=80" alt="Sizzling Brownie"/><div class="veg-badge"></div></div>
+        <div class="menu-info"><h3>Sizzling Brownie</h3><p>Gooey brownie on a hot sizzler plate with chocolate sauce — spectacular presentation</p><span class="menu-price">₹345</span></div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-img-wrap"><img src="https://images.unsplash.com/photo-1567171466295-4efa2501b7a3?w=600&q=80" alt="Cheesecake"/><div class="veg-badge"></div></div>
+        <div class="menu-info"><h3>Cheesecake</h3><p>Classic creamy cheesecake with a fresh seasonal fruit topping</p><span class="menu-price">₹375</span></div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-img-wrap"><img src="https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=600&q=80" alt="Tiramisu"/><div class="veg-badge"></div></div>
+        <div class="menu-info"><h3>Tiramisu</h3><p>Traditional Italian coffee-flavoured dessert — sinfully delicious</p><span class="menu-price">₹395</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DRINKS -->
+  <div id="drinks" class="menu-category">
+    <div class="menu-full">
+      <div class="menu-full-section">
+        <h3>🥤 Beverages</h3>
+        <table class="menu-table">
+          <tr><td>Soft Drinks</td><td></td><td>₹125</td></tr>
+          <tr><td>Fresh Lime Soda</td><td></td><td>₹175</td></tr>
+          <tr><td>Cold Coffee</td><td></td><td>₹225</td></tr>
+          <tr><td>Iced Tea</td><td class="item-desc">Lemon / Peach</td><td>₹195</td></tr>
+          <tr><td>Milkshakes</td><td class="item-desc">Vanilla / Chocolate / Strawberry</td><td>₹245</td></tr>
+          <tr><td>Fruit Juices</td><td></td><td>₹195</td></tr>
+          <tr><td>Hot Chocolate</td><td></td><td>₹35</td></tr>
+          <tr><td>Tea / Coffee</td><td></td><td>₹10 / ₹20</td></tr>
+        </table>
+      </div>
+      <div class="menu-full-section">
+        <h3>🍺 Alcohol &amp; Spirits</h3>
+        <table class="menu-table">
+          <tr><td>Beer</td><td class="item-desc">Bira91, Foster's &amp; more — ask for bucket deals</td><td>On Request</td></tr>
+          <tr><td>Cocktails</td><td class="item-desc">Classic &amp; LPK signature mixes</td><td>On Request</td></tr>
+          <tr><td>Wine</td><td class="item-desc">Red, White &amp; Rosé selection</td><td>On Request</td></tr>
+          <tr><td>Spirits</td><td class="item-desc">Royal Stag Barrel Select &amp; more</td><td>On Request</td></tr>
+          <tr><td>Happy-Hour Drinks &amp; Food</td><td class="item-desc">Ask team for timings</td><td>Special Price</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="vibe">
+  <div class="section-header">
+    <div class="section-badge">The Atmosphere</div>
+    <h2 class="section-title">Feel the Vibe</h2>
+    <div class="gold-line"></div>
+    <p class="section-sub">Open skies, glittering city lights, soulful music — this is LPK at night.</p>
+  </div>
+  <div class="gallery-mosaic">
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1533777857889-4be7c70b33f7?w=1000&q=80" alt="Rooftop Restaurant Ambience"/>
+      <div class="gallery-overlay"></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=600&q=80" alt="Cocktail Bar"/>
+      <div class="gallery-overlay"></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=600&q=80" alt="Live Music Night"/>
+      <div class="gallery-overlay"></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80" alt="Fine Dining Table"/>
+      <div class="gallery-overlay"></div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-header">
+    <div class="section-badge">Why Choose LPK</div>
+    <h2 class="section-title">The Full Experience</h2>
+    <div class="gold-line"></div>
+  </div>
+  <div class="exp-grid">
+    <div class="exp-card"><div class="exp-icon">🛖</div><h4>Outdoor Seating</h4><p>Open-air &amp; rooftop seating under the Bhopal sky</p></div>
+    <div class="exp-card"><div class="exp-icon">🎶</div><h4>Live Performances</h4><p>Regular live music &amp; entertainment nights</p></div>
+    <div class="exp-card"><div class="exp-icon">🍽️</div><h4>All You Can Eat</h4><p>Unlimited feast options — ask our team</p></div>
+    <div class="exp-card"><div class="exp-icon">🌙</div><h4>Late Night Food</h4><p>Open till midnight — perfect for night owls</p></div>
+    <div class="exp-card"><div class="exp-icon">📅</div><h4>Reservations</h4><p>Book your table in advance for a smooth visit</p></div>
+    <div class="exp-card"><div class="exp-icon">🏍️</div><h4>Delivery &amp; Takeaway</h4><p>No-contact delivery &amp; easy takeaway available</p></div>
+    <div class="exp-card"><div class="exp-icon">💳</div><h4>Easy Payments</h4><p>Cards, Google Pay &amp; NFC mobile payments</p></div>
+    <div class="exp-card"><div class="exp-icon">🚗</div><h4>Easy Parking</h4><p>Valet, street &amp; paid garage parking</p></div>
+  </div>
+</section>
+
+<!-- INFO -->
+<section id="info">
+  <div class="section-header">
+    <div class="section-badge">Good to Know</div>
+    <h2 class="section-title">Everything You Need</h2>
+    <div class="gold-line"></div>
+  </div>
+  <div style="height:40px"></div>
+  <div class="info-grid">
+    <div class="info-card">
+      <h4>🎭 Atmosphere</h4>
+      <ul class="info-list">
+        <li>Casual &amp; Cozy</li><li>Romantic Setting</li><li>Trendy Rooftop</li>
+        <li>Good for Groups</li><li>University Students Welcome</li><li>Tourist Friendly</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>🍷 Offerings</h4>
+      <ul class="info-list">
+        <li>Full Alcohol Menu</li><li>Beer, Wine &amp; Cocktails</li><li>Spirits Selection</li>
+        <li>Happy-Hour Drinks &amp; Food</li><li>Small Plates &amp; Quick Bites</li><li>Coffee &amp; Desserts</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>🕐 Dining Options</h4>
+      <ul class="info-list">
+        <li>Brunch / Lunch / Dinner</li><li>Table Service</li><li>Bar on Site</li>
+        <li>Solo Dining Friendly</li><li>Good for Kids</li><li>Restroom Available</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>🌟 Popular For</h4>
+      <ul class="info-list">
+        <li>Rooftop Dining</li><li>Date Nights</li><li>Birthday Celebrations</li>
+        <li>Corporate Gatherings</li><li>Weekend Nights Out</li><li>Live Music Evenings</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-header">
+    <div class="section-badge">Find Us</div>
+    <h2 class="section-title">Visit Us</h2>
+    <div class="gold-line"></div>
+  </div>
+  <div style="height:50px"></div>
+  <div class="contact-wrap">
+    <div>
+      <div class="contact-detail">
+        <div class="c-icon">📍</div>
+        <div>
+          <h4>Address</h4>
+          <p>R-53, Narmadapuram Rd, near DB City Mall,<br>Near Hotel Surendra Vilas, Zone-II,<br>Maharana Pratap Nagar, Bhopal, MP 462011</p>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="c-icon">📞</div>
+        <div><h4>Phone</h4><p><a href="tel:+919755563333">+91 97555 63333</a></p></div>
+      </div>
+      <div class="contact-detail">
+        <div class="c-icon">✉️</div>
+        <div><h4>Email</h4><p><a href="mailto:thespicyaffairs@gmail.com">thespicyaffairs@gmail.com</a></p></div>
+      </div>
+      <div class="contact-detail">
+        <div class="c-icon">🕐</div>
+        <div><h4>Hours</h4><p>Every Day &nbsp;·&nbsp; 11:00 AM – 12:00 AM (Midnight)</p></div>
+      </div>
+    </div>
+    <div>
+      <div class="map-embed">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3666.5268!2d77.4256!3d23.2099!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397c428f8fd68fbd%3A0xcba6db7a1e2cb2a2!2sCafe+LPK!5e0!3m2!1sen!2sin!4v1699000000000" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <div class="insta-wrap">
+    <a href="https://www.instagram.com/lpkbhopal?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" class="btn-insta">
+      <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      Follow Us on Instagram @lpkbhopal
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Cafe LPK</div>
+  <p class="footer-tagline">Love · Passion · Karma — Rooftop Bar &amp; Kitchen, Bhopal</p>
+  <div class="footer-links">
+    <a href="#hero">Home</a><a href="#about">About</a><a href="#menu">Menu</a>
+    <a href="#vibe">Gallery</a><a href="#contact">Contact</a>
+    <a href="mailto:thespicyaffairs@gmail.com">Email Us</a>
+  </div>
+  <p class="footer-copy">© 2025 Cafe LPK · Designed with ♥ in Bhopal</p>
+</footer>
+
+<script>
+  function toggleNav() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+  function showTab(id, el) {
+    document.querySelectorAll('.menu-category').forEach(c => c.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    el.classList.add('active');
+  }
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').style.boxShadow =
+      window.scrollY > 50 ? '0 4px 30px rgba(0,0,0,0.7)' : 'none';
+  });
+  // Close nav on link click (mobile)
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
+  });
+</script>
+</body>
+</html>
